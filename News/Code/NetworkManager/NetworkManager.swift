@@ -9,13 +9,24 @@ import Foundation
 
 class NetworkManager {
     
-    let basicURL = "https://newsdata.io/api/1/news?apikey=pub_567936a595650a79c8d8ff4b8e0fd8aabe208&country=us"
+    private let apiKey = "pub_567936a595650a79c8d8ff4b8e0fd8aabe208"
+    private let server = "https://newsdata.io/api/1/news?apikey="
+    private let country = "&country=us"
     
-    func fetchNews(completion: @escaping (Result<[Article], Error>) -> Void) {
-        guard let url = URL(string: basicURL) else {
+    private func createURL(nextPage: String? = nil) -> URL? {
+                
+        let urlString = server + apiKey + country + (nextPage == nil ? "&page=\(nextPage ?? "")" : "")
+        return URL(string: urlString)
+    }
+
+    
+    // Function to fetch news with optional pagination
+    func fetchNews(nextPage: String? = nil, completion: @escaping (Result<[Article], Error>) -> Void) {
+        guard let url = createURL(nextPage: nextPage) else {
             print("Invalid URL")
             return
         }
+        
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 completion(.failure(error))

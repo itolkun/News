@@ -16,6 +16,10 @@ class NewsVC: UIViewController {
     }
     
     private var newsArticles: [Article] = []
+    private var currentPage = 1
+    private var isFetchingMore = false
+    private var totalResults = 0
+           
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,27 +29,33 @@ class NewsVC: UIViewController {
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
         contentView.tableView.register(NewsCell.self, forCellReuseIdentifier: "NewsCell")
-        fetchNews()
+        fetchNews(page: currentPage)
 
     }
     
-    private func fetchNews() {
-        networkManager.fetchNews { [weak self] result in
+    private func fetchNews(page: Int) {
+        guard !isFetchingMore else { return }
+        isFetchingMore = true
+        
+        networkManager.fetchNews(nextPage: String(page)) { [weak self] result in
             switch result {
             case .success(let articles):
-                self?.newsArticles = articles
+                self?.newsArticles.append(contentsOf: articles)
                 
                 DispatchQueue.main.async {
                     self?.contentView.tableView.reloadData()
                 }
+                self?.isFetchingMore = false
+                self?.currentPage += 1
             case .failure(let error):
                 print("Error fetching news: \(error.localizedDescription)")
+                self?.isFetchingMore = false
             }
         }
     }
 }
 
-extension NewsVC: UITableViewDelegate, UITableViewDataSource {
+extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return newsArticles.count
@@ -78,5 +88,15 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60.0
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let scrollViewHeight = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - scrollViewHeight {
+            fetchNews(page: currentPage)
+        }
     }
 }

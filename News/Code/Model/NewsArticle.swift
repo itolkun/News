@@ -11,6 +11,7 @@ struct NewsApiResponse: Codable {
     let status: String
     let totalResults: Int
     let results: [Article]
+    let nextPage: String?
 }
 
 struct Article: Codable {
