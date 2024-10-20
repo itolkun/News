@@ -20,6 +20,5 @@ public class NewsEntity: NSManagedObject {
     @NSManaged public var descript: String?
     @NSManaged public var url: String?
     @NSManaged public var date: String?
-    @NSManaged public var isFavourite: String?
 }
 extension NewsEntity : Identifiable {}

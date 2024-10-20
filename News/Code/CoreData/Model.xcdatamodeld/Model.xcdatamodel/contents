@@ -5,7 +5,6 @@
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="descript" optional="YES" attributeType="String"/>
         <attribute name="image" optional="YES" attributeType="String"/>
-        <attribute name="isFavourite" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="String"/>
     </entity>
 </model>

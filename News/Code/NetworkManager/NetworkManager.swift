@@ -20,7 +20,6 @@ class NetworkManager {
     }
 
     
-    // Function to fetch news with optional pagination
     func fetchNews(nextPage: String? = nil, completion: @escaping (Result<[Article], Error>) -> Void) {
         guard let url = createURL(nextPage: nextPage) else {
             print("Invalid URL")

@@ -24,7 +24,7 @@ class StorageManager {
         return container
     }()
     
-    func addNews(image: String?, authorName: String?, description: String?, url: String, isFavorite: Bool ) -> NewsEntity? {
+    func addNews(image: String?, authorName: String?, description: String?, url: String ) -> NewsEntity? {
         let context = persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(forEntityName: "NewsEntity", in: context) else { return nil }
         
@@ -36,7 +36,6 @@ class StorageManager {
         news.url = url
         news.image = image
         news.image = image
-        news.isFavourite = isFavorite ? "1" : "0"
         saveContext()
         return news
     }
@@ -93,10 +92,5 @@ class StorageManager {
                 fatalError("Failed to save Core Data context: \(error)")
             }
         }
-    }
-    
-    func toggleFavorite(news: NewsEntity) {
-        news.isFavourite = news.isFavourite == "1" ? "0" : "1"
-        saveContext()
     }
 }

@@ -35,7 +35,10 @@ class DetailedNewsVC: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(urlLabelTapped))
         contentView.urlLabel.addGestureRecognizer(tapGesture)
         configureView()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        configureView()
     }
     
     func configure(with article: Article) {
@@ -91,8 +94,7 @@ class DetailedNewsVC: UIViewController {
                     image: article.imageURL ?? "",
                     authorName: article.creator?.first ?? "Unknown Author",
                     description: article.description ?? "Empty Description",
-                    url: article.link ?? "",
-                    isFavorite: true
+                    url: article.link ?? ""
                 ) {
                     self.newsEntity = newsEntity
                 }
