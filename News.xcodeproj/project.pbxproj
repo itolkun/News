@@ -24,6 +24,10 @@
 		83EF40732CC510800064D1B0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83EF40712CC510800064D1B0 /* Model.xcdatamodeld */; };
 		83EF40762CC515750064D1B0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF40752CC515750064D1B0 /* NetworkManager.swift */; };
 		83EF407B2CC51BB90064D1B0 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF407A2CC51BB90064D1B0 /* Helper.swift */; };
+		83EF407E2CC5244F0064D1B0 /* DetailedNewsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF407D2CC5244F0064D1B0 /* DetailedNewsVC.swift */; };
+		83EF40802CC524590064D1B0 /* DetailedNewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF407F2CC524590064D1B0 /* DetailedNewsView.swift */; };
+		83EF40832CC52A1A0064D1B0 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 83EF40822CC52A1A0064D1B0 /* SDWebImage */; };
+		83EF40852CC52A1A0064D1B0 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 83EF40842CC52A1A0064D1B0 /* SDWebImageMapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +48,8 @@
 		83EF40722CC510800064D1B0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		83EF40752CC515750064D1B0 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		83EF407A2CC51BB90064D1B0 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		83EF407D2CC5244F0064D1B0 /* DetailedNewsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedNewsVC.swift; sourceTree = "<group>"; };
+		83EF407F2CC524590064D1B0 /* DetailedNewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedNewsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +57,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83EF40832CC52A1A0064D1B0 /* SDWebImage in Frameworks */,
 				83EF40662CC509BB0064D1B0 /* SnapKit in Frameworks */,
+				83EF40852CC52A1A0064D1B0 /* SDWebImageMapKit in Frameworks */,
 				83EF40682CC509BB0064D1B0 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -108,6 +116,7 @@
 		83EF40562CC5091A0064D1B0 /* Code */ = {
 			isa = PBXGroup;
 			children = (
+				83EF407C2CC524300064D1B0 /* DetailedNews */,
 				83EF40772CC518A20064D1B0 /* Helpers */,
 				83EF40742CC5153F0064D1B0 /* NetworkManager */,
 				83EF40702CC510680064D1B0 /* CoreData */,
@@ -194,6 +203,15 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		83EF407C2CC524300064D1B0 /* DetailedNews */ = {
+			isa = PBXGroup;
+			children = (
+				83EF407D2CC5244F0064D1B0 /* DetailedNewsVC.swift */,
+				83EF407F2CC524590064D1B0 /* DetailedNewsView.swift */,
+			);
+			path = DetailedNews;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -213,6 +231,8 @@
 			packageProductDependencies = (
 				83EF40652CC509BB0064D1B0 /* SnapKit */,
 				83EF40672CC509BB0064D1B0 /* SnapKit-Dynamic */,
+				83EF40822CC52A1A0064D1B0 /* SDWebImage */,
+				83EF40842CC52A1A0064D1B0 /* SDWebImageMapKit */,
 			);
 			productName = News;
 			productReference = 83EF403D2CC508AD0064D1B0 /* News.app */;
@@ -244,6 +264,7 @@
 			mainGroup = 83EF40342CC508AD0064D1B0;
 			packageReferences = (
 				83EF40642CC509BB0064D1B0 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				83EF40812CC52A1A0064D1B0 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = 83EF403E2CC508AD0064D1B0 /* Products */;
 			projectDirPath = "";
@@ -281,7 +302,9 @@
 				83EF40632CC509770064D1B0 /* FavoriteNewsVC.swift in Sources */,
 				83EF40612CC5096F0064D1B0 /* FavoriteNewView.swift in Sources */,
 				83EF406F2CC50CF90064D1B0 /* NewsArticle.swift in Sources */,
+				83EF407E2CC5244F0064D1B0 /* DetailedNewsVC.swift in Sources */,
 				83EF407B2CC51BB90064D1B0 /* Helper.swift in Sources */,
+				83EF40802CC524590064D1B0 /* DetailedNewsView.swift in Sources */,
 				83EF40732CC510800064D1B0 /* Model.xcdatamodeld in Sources */,
 				83EF405D2CC509510064D1B0 /* NewsVC.swift in Sources */,
 			);
@@ -514,6 +537,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		83EF40812CC52A1A0064D1B0 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.19.7;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -526,6 +557,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 83EF40642CC509BB0064D1B0 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = "SnapKit-Dynamic";
+		};
+		83EF40822CC52A1A0064D1B0 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 83EF40812CC52A1A0064D1B0 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+		83EF40842CC52A1A0064D1B0 /* SDWebImageMapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 83EF40812CC52A1A0064D1B0 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImageMapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 

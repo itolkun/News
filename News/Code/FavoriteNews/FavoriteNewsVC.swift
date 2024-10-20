@@ -17,6 +17,7 @@ class FavoriteNewsVC: UIViewController {
         super.viewDidLoad()
         view = FavoriteNewsView()
         view.backgroundColor = .white
+        navigationItem.title = "Favourite News"
         
     }
 }

@@ -21,6 +21,7 @@ class NewsVC: UIViewController {
         super.viewDidLoad()
         view = NewsView()
         view.backgroundColor = .white
+        navigationItem.title = "News"
         contentView.tableView.delegate = self
         contentView.tableView.dataSource = self
         contentView.tableView.register(NewsCell.self, forCellReuseIdentifier: "NewsCell")
@@ -62,12 +63,17 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource {
         if let formattedDate = formatDate(rawDate) {
             cell.dateLabel.text = formattedDate
         }
-        
+        cell.selectionStyle = .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        let selectedArticle = newsArticles[indexPath.row]
+        let detailedNewsVC = DetailedNewsVC()
+        
+        detailedNewsVC.configure(with: selectedArticle)
+        
+        navigationController?.pushViewController(detailedNewsVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

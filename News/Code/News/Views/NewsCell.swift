@@ -53,7 +53,7 @@ class NewsCell: UITableViewCell {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(8)
             make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-55)
+            make.trailing.equalToSuperview().offset(-80)
         }
         
         subtitleLabel.snp.makeConstraints { make in
