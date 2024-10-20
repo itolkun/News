@@ -10,6 +10,15 @@ import SnapKit
 
 class NewsCell: UITableViewCell {
     
+    let imageView1: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 6
+        imageView.image = UIImage(named: "emptyImage")
+        return imageView
+    }()
+    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
@@ -36,29 +45,35 @@ class NewsCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-               setupViews()
     }
     
     private func setupViews() {
         addSubview(titleLabel)
         addSubview(subtitleLabel)
         addSubview(dateLabel)
+        addSubview(imageView1)
 
      
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(8)
-            make.leading.equalToSuperview().offset(16)
+            make.leading.equalTo(imageView1.snp.trailing).offset(10)
             make.trailing.equalToSuperview().offset(-80)
+        }
+        
+        imageView1.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(8)
+            make.leading.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-8)
+            make.width.equalTo(42)
         }
         
         subtitleLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(3)
-            make.leading.equalToSuperview().offset(16)
+            make.leading.equalTo(imageView1.snp.trailing).offset(10)
             make.trailing.equalToSuperview().offset(-16)
             make.bottom.equalToSuperview().offset(-8)
         }

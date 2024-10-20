@@ -60,6 +60,12 @@ extension FavoriteNewsVC: UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.text = news.author
         cell.subtitleLabel.text = news.descript
         
+        if let imageUrl = news.image, let url = URL(string: imageUrl) {
+            cell.imageView1.sd_setImage(with: url, placeholderImage: UIImage(named: "emptyImage"))
+        } else {
+            cell.imageView1.image = nil
+        }
+        
         let rawDate = news.date ?? "Empty Date"
         if let formattedDate = formatDate(rawDate) {
             cell.dateLabel.text = formattedDate
