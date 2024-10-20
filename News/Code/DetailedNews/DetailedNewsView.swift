@@ -35,8 +35,9 @@ class DetailedNewsView: UIView {
     let urlLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = .gray
+        label.textColor = .blue
         label.numberOfLines = 3
+        label.isUserInteractionEnabled = true 
         return label
     }()
     
