@@ -16,7 +16,15 @@ class DetailedNewsVC: UIViewController {
     
     var article: Article?
     private var newsEntity: NewsEntity?
-    private var isStarred = false
+    
+    private var isStarred: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: article?.link ?? "")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: article?.link ?? "")
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +40,17 @@ class DetailedNewsVC: UIViewController {
     
     func configure(with article: Article) {
         self.article = article
+        fetchNewsEntity(for: article.link ?? "")
+    }
+    
+    private func fetchNewsEntity(for link: String) {
+        StorageManager.shared.fetchNewsEntity(with: link) { [weak self] newsEntity, error in
+            if let error = error {
+                print("Error fetching news entity: \(error)")
+                return
+            }
+            self?.newsEntity = newsEntity
+        }
     }
     private func configureView() {
         guard let article = article else { return }
@@ -65,22 +84,24 @@ class DetailedNewsVC: UIViewController {
     @objc private func starButtonTapped() {
         isStarred.toggle()
         updateStarButton()
-
         
         if isStarred {
             if let article = article {
-                StorageManager.shared.addNews(
+                if let newsEntity = StorageManager.shared.addNews(
                     image: article.imageURL ?? "",
-                    authorName: article.creator?.first ?? "",
-                    description: article.description ?? "",
+                    authorName: article.creator?.first ?? "Unknown Author",
+                    description: article.description ?? "Empty Description",
                     url: article.link ?? "",
                     isFavorite: true
-                )
+                ) {
+                    self.newsEntity = newsEntity
+                }
             }
         } else {
-            if let newsEntity = newsEntity {
-                StorageManager.shared.toggleFavorite(news: newsEntity)
+            if let articleLink = article?.link {
+                StorageManager.shared.deleteNewsEntity(with: articleLink)
             }
         }
+        
     }
 }

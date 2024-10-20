@@ -16,7 +16,7 @@ class FavoriteNewsVC: UIViewController {
     }
     
     private var news: [NewsEntity] = []
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = FavoriteNewView()
@@ -39,7 +39,12 @@ class FavoriteNewsVC: UIViewController {
             }
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        fetchNews()
+    }
 }
+
 
 extension FavoriteNewsVC: UITableViewDelegate, UITableViewDataSource {
     
@@ -67,7 +72,21 @@ extension FavoriteNewsVC: UITableViewDelegate, UITableViewDataSource {
         let selectedArticle = news[indexPath.row]
         let detailedNewsVC = DetailedNewsVC()
         
-//        detailedNewsVC.configure(with: selectedArticle)
+        var creators: [String] = []
+        if let author = selectedArticle.author {
+            creators.append(author)
+        }
+        
+        let article = Article(
+            title: selectedArticle.author,
+            link: selectedArticle.url,
+            description: selectedArticle.descript,
+            creator: creators,
+            pubDate: selectedArticle.date,
+            imageURL: selectedArticle.image
+        )
+        
+        detailedNewsVC.configure(with: article)
         
         navigationController?.pushViewController(detailedNewsVC, animated: true)
     }

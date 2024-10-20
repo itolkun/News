@@ -53,11 +53,36 @@ class StorageManager {
         }
     }
     
-    func deleteNews(_ news: NewsEntity) {
+    func deleteNewsEntity(with link: String) {
         let context = persistentContainer.viewContext
-        context.delete(news)
-        saveContext()
+        let fetchRequest: NSFetchRequest<NewsEntity> = NewsEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "url == %@", link)
+
+        do {
+            let newsEntities = try context.fetch(fetchRequest)
+            for entity in newsEntities {
+                context.delete(entity)
+            }
+            saveContext()
+        } catch {
+            print("Failed to delete news entity: \(error)")
+        }
     }
+
+    func fetchNewsEntity(with link: String, completion: @escaping (NewsEntity?, Error?) -> Void) {
+        let context = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<NewsEntity> = NewsEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "url == %@", link)
+
+        do {
+            let newsEntities = try context.fetch(fetchRequest)
+            completion(newsEntities.first, nil)
+        } catch {
+            print("Failed to fetch news entity: \(error)")
+            completion(nil, error)
+        }
+    }
+
 
     private func saveContext() {
         let context = persistentContainer.viewContext
@@ -71,7 +96,6 @@ class StorageManager {
     }
     
     func toggleFavorite(news: NewsEntity) {
-        let context = persistentContainer.viewContext
         news.isFavourite = news.isFavourite == "1" ? "0" : "1"
         saveContext()
     }
