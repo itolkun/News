@@ -17,7 +17,7 @@ class NewsVC: UIViewController {
     }
     
     private var newsArticles: [Article] = []
-    private var currentPage = 1
+    private var currentPage: String?
     private var isFetchingMore = false
     private var totalResults = 0
            
@@ -34,26 +34,29 @@ class NewsVC: UIViewController {
 
     }
     
-    private func fetchNews(page: Int) {
+    private func fetchNews(page: String?) {
         guard !isFetchingMore else { return }
         isFetchingMore = true
         
-        networkManager.fetchNews(nextPage: String(page)) { [weak self] result in
+        networkManager.fetchNews(nextPage: page) { [weak self] result in
             switch result {
-            case .success(let articles):
-                self?.newsArticles.append(contentsOf: articles)
+            case .success(let response):
+                self?.newsArticles.append(contentsOf: response.results)
                 
                 DispatchQueue.main.async {
                     self?.contentView.tableView.reloadData()
                 }
+                
+                self?.currentPage = response.nextPage
                 self?.isFetchingMore = false
-                self?.currentPage += 1
+                
             case .failure(let error):
                 print("Error fetching news: \(error.localizedDescription)")
                 self?.isFetchingMore = false
             }
         }
     }
+
 }
 
 extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {

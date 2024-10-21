@@ -14,13 +14,14 @@ class NetworkManager {
     private let country = "&country=us"
     
     private func createURL(nextPage: String? = nil) -> URL? {
-                
-        let urlString = server + apiKey + country + (nextPage == nil ? "&page=\(nextPage ?? "")" : "")
+        var urlString = server + apiKey + country
+        if let nextPage = nextPage {
+            urlString += "&page=\(nextPage)"
+        }
         return URL(string: urlString)
     }
-
     
-    func fetchNews(nextPage: String? = nil, completion: @escaping (Result<[Article], Error>) -> Void) {
+    func fetchNews(nextPage: String? = nil, completion: @escaping (Result<NewsApiResponse, Error>) -> Void) {
         guard let url = createURL(nextPage: nextPage) else {
             print("Invalid URL")
             return
@@ -37,7 +38,7 @@ class NetworkManager {
             }
             do {
                 let decodedResponse = try JSONDecoder().decode(NewsApiResponse.self, from: data)
-                completion(.success(decodedResponse.results))
+                completion(.success(decodedResponse))
             } catch let jsonError {
                 completion(.failure(jsonError))
             }
