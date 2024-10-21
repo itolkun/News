@@ -75,8 +75,6 @@ extension NewsVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
         
         if let imageUrl = article.imageURL, let url = URL(string: imageUrl) {
             cell.imageView1.sd_setImage(with: url, placeholderImage: UIImage(named: "emptyImage"))
-        } else {
-            cell.imageView1.image = nil
         }
         
         let rawDate = article.pubDate ?? "Empty Date"
